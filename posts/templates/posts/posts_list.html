@@ -1,37 +1,27 @@
-
-{% extends 'base.html' %} 
-
+{% extends 'base.html' %}
+{% load static from staticfiles %}
 {% block content %}
-<h3>Blog Posts</h3>  
- 
-<div class="row">
- <form action="/search"> 
-    <input type="text" name="q" placeholder= "Search For.."/> 
-    <input type=submit class="waves-effect waves-light btn btn_small blue"/>
-    </form>
-</div>
-<a href="{% url 'post_add' %}" class="waves-effect waves-light btn btn_small blue">New Post</a></a>
-
-    {% for post in posts %}  
-    
-  <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="">
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><a href="{% url 'post_detail' post.id %}">{{post.title}}</a><i class="material-icons right">more_vert</i></span>
-      <p><a href="#">This is a link</a></p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"><a href="{% url 'post_detail' post.id %}">{{post.title}}</a><i class="material-icons right">close</i></span>
-      <p>{{post.content|truncatewords:30}}</p>
-    </div> 
-     <p>
-                <a href="" class="waves-effect waves-light btn btn_small">Del</a>
-                <a <a href="" class="waves-effect waves-light btn btn_small blue">Edit</a>
-            </p>
-  </div>
-  
-    {% endfor %} 
-    {% endblock content%}
-
+    {% for post in posts %}
+        <div class="row">
+            <div class="col-md-2 col-sm-3 text-center">
+                <a class="story-img" href="#">
+                    <img src="{{ MEDIA_URL}}avatars/anonymous.png" class="img-circle">
+                </a>
+                <p><span class="boldtext">Author:</span> {{ post.author.username }}</p>
+            </div>
+            <div class="col-md-10 col-sm-9">
+                <h3>{{ post.title }}</h3>
+                <div class="row">
+                    <div class="col-xs-9">
+                        <p>{{ post.content|truncatewords:30 }}</p>
+                        <p><a href="{% url 'post_detail' post.id %}"  class="btn btn-default">Read more</a></p>
+                        <p><span class="boldtext">Published on:</span> {{ post.published_date }} </p>
+                        <p><span class="boldtext">Views:</span> {{post.views}}</p>
+                        <p><span class="boldtext">Tag:</span> {{ post.tag }}</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

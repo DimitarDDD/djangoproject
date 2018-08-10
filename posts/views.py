@@ -14,13 +14,32 @@ def post_detail(request, id):
     
 def post_add(request):   
     if request.method =='POST':   
-        
-        form=BlogPostForm(request.POST) 
-        form.save()
-        return redirect("posts_list")
+        form=BlogPostForm(request.POST, request.FILES)    
+        if form.is_valid(): 
+            print("is valid")
+            form.save()
+            return redirect("posts_list") 
+        else:
+             return render(request, "posts/post_form.html",{"form": form})
     else:  
         form = BlogPostForm()
-        return render(request, "posts/post_add.html",{"form": form})  
+    return render(request, "posts/post_form.html",{"form": form})  
+        
+def edit_post(request, id):   
+    post=get_object_or_404(Post, pk=id)
+    if request.method=='POST':      
+        form=BlogPostForm(request.POST, request.FILES, instance=post) 
+        if form.is_valide(): 
+            form.save() 
+            return redirect("post_detail", id=id )  
+         else:
+             return render(request, "posts/post_form.html",{"form": form})   
+            
+    else: 
+        post=get_object_or_404(Post, pk=id)
+        form = BlogPostForm(instance=post)
+        return render(request, "posts/post_form.html",{"form": form})
+           
         
 def search_posts(request): 
     query = request.GET['q'] 
