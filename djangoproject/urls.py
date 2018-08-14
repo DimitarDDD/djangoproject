@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path ,include
-from posts.views import posts_list,post_detail, post_add, search_posts, edit_post, like_post, unlike_post
+from posts.views import posts_list,post_detail, post_add, search_posts, edit_post, like_post, unlike_post, follow_person, unfollow_person 
 from django.views.static import serve
 from django.conf import settings
 from accounts.views import register  
@@ -41,6 +41,8 @@ urlpatterns = [
     path('search', search_posts, name='search_posts'), 
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}), 
     path('like_post/<int:id>', like_post, name="like_post"),
-    path('unlike_post/<int:id>', unlike_post, name="unlike_post"),
+    path('unlike_post/<int:id>', unlike_post, name="unlike_post"), 
+    path('follow_person/<int:id>', follow_person, name="follow_person"),
+    path('unfollow_person/<int:id>', unfollow_person, name="unfollow_person"),
 
 ]

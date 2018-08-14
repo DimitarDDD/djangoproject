@@ -14,8 +14,9 @@ def post_detail(request, id):
     post.save() 
     
     can_edit = request.user == post.author or request.user.is_superuser
-    does_like= request.user.profile in post.liked_by.all()
-    return render(request, 'posts/post_detail.html',{'post':post, 'can_edit': can_edit, 'does_like':does_like})  
+    does_like= request.user.profile in post.liked_by.all() 
+     
+    return render(request, 'posts/post_detail.html',{'post':post, 'can_edit': can_edit, 'does_like':does_like,})  
     
 def post_add(request):   
     if request.method =='POST':   
@@ -75,4 +76,14 @@ def unlike_post(request, id):
     request.user.profile.likes.remove(post)
     return redirect("post_detail", id=post.id) 
  
+def follow_person(request, id): 
+    post = get_object_or_404(Post, pk=id) 
+    request.user.profile.follower.add(post) 
+    return redirect("post_detail", id=post.id) 
     
+    
+def unfollow_person(request, id): 
+    post = get_object_or_404(Post, pk=id)  
+    request.user.profile.follower.remove(post)
+    return redirect("post_detail", id=post.id) 
+     
