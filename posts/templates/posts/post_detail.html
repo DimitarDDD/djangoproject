@@ -19,7 +19,8 @@
                     <p><span class="boldtext">Published on:</span> {{ post.published_date }} </p>
                     <p><span class="boldtext">Views:</span> {{post.views}}</p>
                     <p><span class="boldtext">Tag:</span> {{ post.tag }}</p>
-                    <p><span class="boldtext">Likes:</span> {{post.liked_by.all | length}}</p>
+                    <p><span class="boldtext">Likes:</span> {{post.liked_by.all | length}}</p> 
+                    <p><span class="boldtext">Followers:</span> {{ post.followers}}</p>
                     
                     <a href="{% url 'posts_list' %}"  class="btn btn-success">Back to Blog</a>
                      
