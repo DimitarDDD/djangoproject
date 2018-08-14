@@ -1,5 +1,5 @@
 from .base import *  
-import dj.database_url
+import dj_database_url
 
 DEBUG=False
 
